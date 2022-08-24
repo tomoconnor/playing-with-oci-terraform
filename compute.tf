@@ -11,10 +11,10 @@ resource "oci_core_instance" "ubuntu_instance" {
     shape_config {
       ocpus = 4
       memory_in_gbs = 24
-      
+
     }
     # Optional
-    display_name = "cursed-chat-server"
+    display_name = format("%s-server", var.component_name)
     create_vnic_details {
         assign_public_ip = true
         subnet_id = module.vcn.subnet_id["pubic"]
