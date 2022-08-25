@@ -39,3 +39,68 @@ resource "oci_core_network_security_group_security_rule" "nsg_rule_ssh_in" {
     }
 
 }
+
+resource "oci_core_network_security_group_security_rule" "nsg_rule_http_out" {
+    #Required
+    network_security_group_id = oci_core_network_security_group.main_network_security_group.id
+    direction = "EGRESS"
+    protocol = "6" //TCP
+
+    #Optional
+    description = "Allow HTTP Out"
+    destination = "0.0.0.0/0"
+    destination_type = "CIDR_BLOCK"
+    
+
+    source = var.cidr_block
+    source_type = "CIDR_BLOCK"
+    stateless = false
+    tcp_options {
+
+        #Optional
+        destination_port_range {
+            #Required
+            max = "80"
+            min = "80"
+        }
+        source_port_range {
+            #Required
+            max = "65535"
+            min = "1"
+        }
+    }
+
+}
+
+
+resource "oci_core_network_security_group_security_rule" "nsg_rule_https_out" {
+    #Required
+    network_security_group_id = oci_core_network_security_group.main_network_security_group.id
+    direction = "EGRESS"
+    protocol = "6" //TCP
+
+    #Optional
+    description = "Allow HTTPS Out"
+    destination = "0.0.0.0/0"
+    destination_type = "CIDR_BLOCK"
+    
+
+    source = var.cidr_block
+    source_type = "CIDR_BLOCK"
+    stateless = false
+    tcp_options {
+
+        #Optional
+        destination_port_range {
+            #Required
+            max = "443"
+            min = "443"
+        }
+        source_port_range {
+            #Required
+            max = "65535"
+            min = "1"
+        }
+    }
+
+}
